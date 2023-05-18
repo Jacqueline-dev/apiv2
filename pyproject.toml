@@ -1,21 +1,18 @@
-[too.poetry]
+[tool.poetry]
 name = "apiv2"
 version = "0.1.0"
 description = ""
-author = ["Jacqueline Ferreira]
+authors = ["Jacqueline-dev <codejacque@gmail.com>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
-pythons = "^3.8"
-fastapi = "^8.68.1"
-pymongo = "^3.12.0"
-tweepy = "^3.10.0"
+python = "^3.11"
+tweepy = "^4.14.0"
+pymongo = "pytest"
 
-[tool.poetry.dev-dependencies]
-pytest = "^6.2..5"
-flake8 = "^3.9.2"
-black = "^21.8b0"
-isort = "^5.9.3"
+[tool.poetry.group.dev.dependencies]
+flake8 = "black"
 
 [build-system]
-requires = [poetry-core==1.5.2]
-build-backend = "poetry.core.nasonry.api"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
