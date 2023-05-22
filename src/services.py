@@ -7,7 +7,7 @@ from src.secrets import ACCESS_TOKEN, ACCESS_TOKEN_SECRET, CONSUMER_KEY, CONSUME
 from src.constantes import BRAZIL_WOE_ID
 
 
-def _get_trends(woe_id: int) -> List[Dict[str, Any]]:
+def _get_trends(woe_id: int, api: tweepy.API) -> List[Dict[str, Any]]:
     """Get treending topics from Twitter API.
 
     Args:
@@ -16,12 +16,6 @@ def _get_trends(woe_id: int) -> List[Dict[str, Any]]:
     Returns:
         List[Dict[str, Any]]: Trends list.
     """
-
-    auth = tweepy.OAuth1UserHandler(consumer_key=CONSUMER_KEY, consumer_secret=CONSUMER_SECRET)
-
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-
-    api = tweepy.API(auth)
 
     trends = api.trends_place(woe_id)
 
@@ -36,5 +30,10 @@ def get_trends_from_mongo() -> List[Dict[str, Any]]:
 
 
 def save_trands() -> None:
-    trends = _get_trends(woe_id=BRAZIL_WOE_ID)
+    auth = tweepy.OAuth1UserHandler(consumer_key=CONSUMER_KEY, consumer_secret=CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
+    api = tweepy.API(auth)
+
+    trends = _get_trends(woe_id=BRAZIL_WOE_ID api=api)
     trends_collection.insert_many(trends)
